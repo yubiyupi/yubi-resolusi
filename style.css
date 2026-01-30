@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+table.sudoku {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.sudoku td {
+    border: 1px solid #000;
+}
+
+.sudoku tr:nth-child(3n) td {
+    border-bottom: 3px solid black;
+}
+
+.sudoku td:nth-child(3n) {
+    border-right: 3px solid black;
+}
+
+.sudoku input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+}
+
+input[disabled] {
+    background: #ddd;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 15px;
+    padding: 8px 20px;
+    font-size: 16px;
+}
+
+.message {
+    font-size: 18px;
+    margin-top: 10px;
+}
