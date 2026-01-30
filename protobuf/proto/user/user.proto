@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package user;
+
+import "common/base_response.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+option go_package = "grpc-course-protobuf/pb/user";
+
+service UserService {
+  rpc CreateUser(User) returns (CreateResponse);//Unary
+  rpc Login(LoginRequest) returns (LoginResponse); 
+}
+
+message Address {
+  int64 id = 1;
+  string full_address = 2;
+  string province = 3;
+  string city = 4;
+}
+
+message User {
+  reserved 2;
+  int64 id = 1;
+  int64 age = 3 [(buf.validate.field).int64.gte = 0];
+  double balance = 4 [
+  (buf.validate.field).double.gte = 0,
+  (buf.validate.field).double.lte = 1000000
+];
+  bool is_active = 5;
+  Address address = 6;
+  repeated string educations = 7;
+  string spouse_name = 8;
+  google.protobuf.Timestamp birth_date = 9;
+}
+
+message CreateResponse {
+  common.BaseResponse base = 1;
+  google.protobuf.Timestamp created_at = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  common.BaseResponse base = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+// protoc --go_out=./pb --go-grpc_out=./pb --proto_path=./proto --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative user/user.proto
